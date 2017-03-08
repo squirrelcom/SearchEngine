@@ -36,13 +36,43 @@
     <!-- Script -->
 
     <script>
-    localStorage.clear();
+    //localStorage.clear();
     // Create an initial toDoCount variable
+    //var keyContain = []; 
+      /*
+    function divisionMan(dataNum, stringVal){
+     this.key = dataNum;
+     this.values= stringVal; 
+
+
+    }
+    */
+
+
     var toDoCount = 0;
-    console.log(localStorage.length);
+    //console.log(localStorage.length);
     if( localStorage.length != 0 ){
-      for(var i = 0 ; i< localStorage.length;i++){
-      console.log("hi");
+      for(var key in localStorage){
+      var division =localStorage.getItem(key);
+     // division =  $.parseJSON(division) || {};
+      //console.log("hi");
+      console.log(division);
+      var toDoItem = $("<p>");
+      var keyMan = "item-"+key;
+      toDoItem.attr("id", keyMan);
+      toDoItem.append(" " + division); 
+      var toDoClose = $("<button>");
+
+      toDoClose.attr("data-to-do", key);
+      toDoClose.addClass("checkbox");
+      toDoClose.append("✓"); 
+      toDoItem = toDoItem.prepend(toDoClose);
+      $("#to-dos").append(toDoItem);
+
+      
+      //$("#to-dos").append(division);
+      toDoCount++;
+
       }
     }
     //  On Click event associated with the add-to-do function
@@ -70,12 +100,14 @@
       toDoClose.attr("data-to-do", toDoCount);
       toDoClose.addClass("checkbox");
       toDoClose.append("✓"); 
-
-      var stringDate = JSON.stringify(toDoClose);
-
+      //console.log(toDoClose);
       
+      //var inputMan = new divisionMan("item-" + toDoCount, toDoTask ); 
       // Append the button to the to do item
       toDoItem = toDoItem.prepend(toDoClose);
+      //var stringDate = JSON.stringify(inputMan);
+      //console.log(stringDate);      
+      localStorage.setItem( toDoCount  ,toDoTask); 
 
       // Add the button and to do item to the to-dos div
       $("#to-dos").append(toDoItem);
@@ -94,7 +126,12 @@
 
       // Get the number of the button from its data attribute and hold in a variable called  toDoNumber.
       var toDoNumber = $(this).attr("data-to-do");
-
+      console.log(toDoNumber);
+      var key = toDoNumber;
+      localStorage.removeItem(key);
+      //var key = $(this).attr('id');
+      //console.log(key+"");
+     // localStorage.removeItem('image');
       // Select and Remove the specific <p> element that previously held the to do item number.
       $("#item-" + toDoNumber).remove();
     });
